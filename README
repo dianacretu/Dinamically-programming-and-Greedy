@@ -1,0 +1,104 @@
+	*****************************************
+        *               README                  *
+        *                                       *
+        *       Nume proiect: Tema 1 PA         *
+        *       Autor: Diana Cretu              *
+        *       Grupa: 322 CC                   *
+        *       Deadline: Sambata, 13.04.2018   *
+        *                                       *
+        *                                       *
+        *****************************************
+
+1. Ierarhia proiectului
+
+	Codul sursa este structurat in fisierele:
+		->frati.cpp
+		->planificare.cpp
+		->numaratoare.cpp
+
+2. Implementare
+
+	Problema 1
+
+	Am ales o abordare de tip greedy. Concursurile (salvate sub forma
+unor structuri) sunt sortate descrescator in functie de campul suma, ce
+reprezinta suma dintre jocurile si benzile concursului respectiv. Sunt sortate astfel, deoarece le vom parcurge de la primul, pana la ultimul concurs, iar
+fiecare frate cand ii vine randul, doreste sa aleaga concursul din care poate
+castiga cel mai mult si ca fratele sau sa nu aibe ocazia sa participe la
+concursul din care si el putea castiga cel mai mult la momentul respectiv.
+	In cazul in care sumele sunt egale, sortarea se face descrescator in
+functie de numarul de jocuri.
+	Elementele sortate le vom introduce intr-un vector de vectori. In cazul
+in care, suma este egala pentru mai multe concursuri, introducem concursurile
+respective ordonate intr-un vector, pe care la randul sau il introducem in
+vectorul mare. Daca suma concursului este diferita, il introducem direct in 
+vectorul mare.
+	Pentru a tine cont de cine urmeaza sa isi aleaga concursul, alegem
+variabila rand pe care o iteram la fiecare pas. Daca variabila este para, este
+randul lui John, daca este impara este randul lui Sam.
+	Parcurgem vectorul mare. La fiecare pas, pentru vectorul care se afla
+pe pozitia in care ne aflam din vectorul mare, il parcurgem de la inceput
+pentru John, iar in cazul lui Sam de la final, deoarece concursurile cu suma
+egala sortate descrescator dupa jocuri, inseamna automat ca sunt sortate
+crescator pentru benzi.
+	Complexitatea temporala este: O(n*lgn), deoarece complexitatea sortarii
+este O(n*lgn), urmeaza un for ce introduce toate concursurile in vectorul de
+vectori, ce are o complexitate O(n). Urmeaza parcurgerea vectorului de vector
+creat pentru a-si alege John si Sam concursurile, ce are tot complexitatea O(n)
+deoarece vectorul de vectori are n elemente.
+	Complexitatea spatiala este: O(n), deoarece avem un vector cu n elemente,
+transformat ulterior, intr-un vector de vectori tot cu n elemente.
+
+	Problema 3
+
+	Am ales o abordare de tipul programarii dinamice. Am creat o matrice de
+dimensiunea n x n, unde am pus pe prima linie pierderea daca fiecare proba ar
+fi in cate un concurs. Pe ultima pozitie de pe prima linie va fi 0, deoarece
+daca concursul este ultimul, nu mai exista pierderi. Parcurg fiecare linie si
+pe pozitia [i][j] voi pune pierderea daca (i + 1) probe numarand de la j, j
+inclusiv, sunt in acelasi concurs. In caz ca probele nu incap in acelasi
+concurs, pun infinit, de asemenea, si in cazul in care nu exista (i + 1) probe
+inainte tot infinit. In cazul in care pe o linie este doar infinit, voi iesi
+din completarea matricei, deoarece este redundant sa merg mai departe pentru ca
+urmatoarele linii vor avea tot doar infinit (daca nu incap (i + 1) probe
+intr-un concurs, nu vor incapea nici (i + 2)).
+	Dupa completarea matricei, urmeaza gasirea solutiei optime. Mereu se
+va modifica prima linie, iar solutia se va gasi pe pozitia [0][nr_probe - 1].
+Solutia optima de la pasul j se va calcula alegand minimul dintre:
+dp[0][j]+ dp[0][j - 1], dp[i + 1][j] + dp[0][j - 2], dp[i + 2][j] + dp[0][j - 3]
+si asa mai departe.
+	Pentru a gasi numarul de concursuri am folosit tot programare dinamica,
+numarul de concursuri depinzand de alegerea minimului. Cazul de baza va fi prima
+pozitie din vectorul de concursuri, si anume acolo va fi 1. Pe urma, in cazul in
+care se alege minimul dp[0][j]+ dp[0][j - 1], numarul de concursuri de la
+pozitia j va fi egal cu numarul de concursuri de la pozitia j - 1 plus inca un
+concurs, daca se alege minimul dp[i + 1][j] + dp[0][j - 2] numarul de concursuri
+de la pasul j va fi numarul de concursuri de la pasul [j -2] plus inca un
+concurs si asa mai departe, numarul de concursuri final aflandu-se po pozitia
+[nr_probe - 1].
+	Complexitatea temporala este O(n^3), deoarece avem 3 foruri pana la n,
+cazul cel mai defavorabil, insa in cazul celui de-al treilea, nu ajunge pana la
+n niciodata.
+	Complexitatea spatiala este O(n^2), deoarece creez o matrice n x n.
+
+	Problema 4
+
+	Am ales o rezolvarea de tip backtracking. Algoritmul genereaza primele
+indx solutii. Fiecare solutie o genereaza astfel: mai intai alege primul termen,
+apoi genereaza toate subsirurile de lungime n - 1 pentru fiecare element ales.
+Fiecare element este ales din intervalul min(valoarea maxima pe care o poate
+lua, elementul anterior).
+	Complexitatea temporala este O(n!), deoarece este un algoritm de tip
+backtracking. 
+
+
+	*****************************************
+        *               END README              *
+        *                                       *
+        *       Nume proiect: Tema 1 PA         *
+        *       Autor: Diana Cretu      	*
+        *       Grupa: 322 CC                   *
+        *       Deadline: Sambata, 13.04.2018	*
+        *                                       *
+        *                                       *
+        *****************************************	
